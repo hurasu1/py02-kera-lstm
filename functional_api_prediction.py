@@ -65,7 +65,7 @@ model.fit(train_input, train_output,
 temp = train_input[0, :, ]
 predicted_result = temp
 input_data = np.array(temp).reshape(1, temp.shape[0], temp.shape[1])
-for i in np.arange(0, TIME_SAMPLE_DATA):
+for i in np.arange(0, 2 * TIME_SAMPLE_DATA):
     print(i)
     predicted = model.predict(input_data)
     predicted_result = np.append(predicted_result, predicted[0])
@@ -76,9 +76,11 @@ for i in np.arange(0, TIME_SAMPLE_DATA):
     # plt.plot(input_data[0, :, ])
 
 
-correct_data, _ = create_sin_dataset(2 * TIME_SAMPLE_DATA)
+correct_data, _ = create_sin_dataset(3 * TIME_SAMPLE_DATA)
 correct_data = correct_data[0, ]
 plt.plot(correct_data)
 plt.plot(predicted_result)
-# error = np.array(correct_data).reshape(200,1) - np.array(predicted_result).reshape(200,1)
+
+# error = np.array(correct_data).reshape(200,1) - np.array(predicted_result).reshape(200, 1)
 # plt.plot(error)
+
