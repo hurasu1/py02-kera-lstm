@@ -69,5 +69,6 @@ EncorderとDecorderともに、LSTMである。
 
 ## コードで実践
 実際にいくつか練習してみる。
-- [simple_sin_prediction](./simple_sin_prediction.py)：シンプルにsin関数を学習し、次の点を推論する。
-- [functional_api_sin_prediction](./functional_api_prediction.py)：functional_apiでsimple_sin_predictionと同じことをする。
+- [simple_sin_prediction.py](./simple_sin_prediction.py)：シンプルにsin関数を学習し、次の点を推論する。
+- [functional_api_sin_prediction.py](functional_api_sin_prediction.py)：functional_apiでsimple_sin_predictionと同じことをする。
+- [functional_api_linear_prediction.py](./functional_api_linear_prediction.py)：直線を学習し、続きをかけるか検証する。

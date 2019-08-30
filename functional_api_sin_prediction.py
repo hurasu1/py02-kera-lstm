@@ -1,4 +1,5 @@
 # ライブラリのインポート
+from keras import Input, Model
 from keras.models import Sequential
 from keras.layers.core import Dense, Activation
 from keras.layers.recurrent import LSTM
@@ -30,16 +31,27 @@ def create_sin_dataset(time_sample_size=100, period=33, data_size=1000):
 
 
 # 学習データの生成
-
 TIME_SAMPLE_DATA = 100
 train_input, train_output = create_sin_dataset(TIME_SAMPLE_DATA)
 
-# モデルの生成
-model = Sequential()
-model.add(LSTM(128, batch_input_shape=(None, TIME_SAMPLE_DATA, 1)))
-model.add(Dense(1, activation="linear"))
+# モデルの生成 (functional APIで実行）
+# model = Sequential()
+# model.add(LSTM(128, batch_input_shape=(None, TIME_SAMPLE_DATA, 1)))
+# model.add(Dense(1, activation="linear"))
+# model.compile(Adam(), loss="mean_squared_error")
+model_input = Input(batch_shape=(None, TIME_SAMPLE_DATA, 1))
+seq_model = LSTM(128, return_state=True)
+seq_outs, state_h, state_c = seq_model(model_input)
+model_output = Dense(1)(seq_outs)
+model = Model(model_input, model_output)
 model.compile(Adam(), loss="mean_squared_error")
 
+# 内部状態と出力が同じことを確認
+state_model = Model(model_input, [seq_outs, state_h, state_c])
+out_result, out_state_h, out_state_c = state_model.predict(np.array(train_input[0, :, ]).reshape(1, TIME_SAMPLE_DATA, 1))
+print(np.sum(out_result-out_state_h))
+
+# 学習
 early_stopping = EarlyStopping(monitor='val_loss', mode='auto', patience=20)
 model.fit(train_input, train_output,
           batch_size=300,
@@ -69,5 +81,6 @@ correct_data = correct_data[0, ]
 plt.plot(correct_data)
 plt.plot(predicted_result)
 
-# error = np.array(correct_data).reshape(200,1) - np.array(predicted_result).reshape(200,1)
+# error = np.array(correct_data).reshape(200,1) - np.array(predicted_result).reshape(200, 1)
 # plt.plot(error)
+
