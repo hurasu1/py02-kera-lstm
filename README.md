@@ -72,3 +72,4 @@ EncorderとDecorderともに、LSTMである。
 - [simple_sin_prediction.py](./simple_sin_prediction.py)：シンプルにsin関数を学習し、次の点を推論する。
 - [functional_api_sin_prediction.py](functional_api_sin_prediction.py)：functional_apiでsimple_sin_predictionと同じことをする。
 - [functional_api_linear_prediction.py](./functional_api_linear_prediction.py)：直線を学習し、続きをかけるか検証する。
+- [functional_api_sin_to_cos.py](./functional_api_sin_to_cos.py)：sinを学習させてcosを出力させられるか。ニューラルネットに学習させる内容は、スタートの角度と各速度
